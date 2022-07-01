@@ -1,0 +1,97 @@
+components:
+  schemas:
+    Contacts:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - fileId
+        - actionAttribute
+        - type
+      properties:
+        actionAttribute:
+          type: string
+          enum: [ 'Empty','NeedsToSign','NoAction','ReceivesCopy' ]
+        email:
+          type: string
+        fileId:
+          type: string
+        firstName:
+          type: string
+        isEntity:
+          type: boolean
+        lastName:
+          type: string
+        middleName:
+          type: string
+        primaryPhoneNumber:
+          type: string
+        suffix:
+          type: string
+        type:
+          type: string
+          enum: [ 'Buyer', 'Seller','EscrowOfficer','TitleOfficer','LoanOfficer','BuyerAgent','SellerAgent', 'Other' ]
+        primaryAddress:
+          type: object
+          properties:
+            city:
+              type: string
+            county:
+              type: string
+            id:
+              type: string
+            postalCode:
+              type: string
+            state:
+              type: string
+            streetAddress:
+              type: string
+            streetName:
+              type: string
+            streetNumber:
+              type: string
+            unitNumber:
+              type: string
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: number
+        message:
+          type: string
+
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 401
+            message: Please authenticate
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 403
+            message: Forbidden
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not found
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
